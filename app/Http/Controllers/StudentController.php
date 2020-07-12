@@ -35,10 +35,19 @@ class StudentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-    }
+    public function store(Request $request) {
+        $request->validate([
+            'first_name' => 'required|max:50',
+            'last_name' => 'required|max:50',
+            'student_id_nr' => 'required|max:10|unique:students,student_id_nr',
+            'email' => 'email|nullable|max:255|unique:students,email'
+        ]);
+            $newData = $request->all();
+            $newStudent = new Student();
+            $newStudent->fill($newData);
+            $newStudent->save();
+        return redirect()->route('students.show', ['student' => $newStudent->id]);
+     }
 
     /**
      * Display the specified resource.
@@ -59,9 +68,9 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Student $student)
     {
-        //
+        return view('students.edit', compact('student'));
     }
 
     /**
@@ -71,9 +80,16 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, Student $student) {
+        $request->validate([
+        'first_name' => 'required|max:50',
+        'last_name' => 'required|max:50',
+        'student_id_nr' => 'required|max:10|unique:students,student_id_nr,'.$student->id,
+        'email' => 'email|nullable|max:255|unique:students,email,'.$student->email
+        ]);
+       $data = $request->all();
+       $student->update($data);
+       return redirect()->route('students.show', ['student' => $student]);
     }
 
     /**
