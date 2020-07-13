@@ -89,7 +89,7 @@ class StudentController extends Controller
         ]);
        $data = $request->all();
        $student->update($data);
-       return redirect()->route('students.show', ['student' => $student]);
+       return redirect()->route('students.index', ['student' => $student]);
     }
 
     /**
@@ -100,6 +100,8 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $student = Student::find($id);
+        $student->delete($id);
+        return redirect()->route('students.index', ['student' => $student]);
     }
 }

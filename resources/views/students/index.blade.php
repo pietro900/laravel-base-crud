@@ -29,7 +29,12 @@
                                     <a class="btn btn-info" href="{{ route('students.show', ['student' => $student->id]) }}">Dettagli</a>
 
                                     <a class="btn btn-warning" href="{{ route('students.edit', ['student' => $student->id]) }}">modifica</a>
-                                    <a class="btn btn-danger" href="#">elimina</a>
+
+                                    <form action="{{ route('students.destroy', ['student' => $student->id])}}"   method="post">
+                                        @method('DELETE')
+                                        @csrf
+                                        <input type="submit" class="btn btn-danger" value="elimina">
+                                    </form>
                                 </td>
                             </tr>
                             @empty

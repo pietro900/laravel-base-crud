@@ -20,7 +20,6 @@
     <form action="{{route('students.update', ['student' => $student->id])}}" method="post">
     @method('PUT')
     @csrf
-
         <div class="form-group">
             <label for="firstname-input">First name</label>
             <input type="text" class="form-control" id="firstname-input" name="first_name" value="{{old('first_name', $student->first_name)}}" required>
@@ -38,6 +37,11 @@
             <input type="email" class="form-control" id="email-input" name="email" value="{{old('email', $student->email)}}">
         </div>
           <button type="submit" class="btn btn-warning">modifica</button>
+    </form>
+    <form action="{{ route('students.destroy', ['student' => $student->id])}}" method="post">
+        @method('DELETE')
+        @csrf
+        <input type="submit" class="btn btn-danger" value="elimina">
     </form>
 </div>
 @endsection
